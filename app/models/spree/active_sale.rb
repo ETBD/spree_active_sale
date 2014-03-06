@@ -9,13 +9,12 @@ module Spree
 
     has_many :active_sale_events
     has_one :root, -> { where(:parent_id => nil) },
-            :class_name => "Spree::ActiveSaleEvent",
-            :dependent => :destroy
+            :class_name => "Spree::ActiveSaleEvent"
 
     before_save :have_valid_position
     after_save :set_root
 
-    default_scope   -> { order("#{self.table_name}.position") }
+    default_scope -> { order("#{self.table_name}.position") }
 
     def self.config(&block)
       yield(Spree::ActiveSaleConfig)

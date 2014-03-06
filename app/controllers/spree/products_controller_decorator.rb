@@ -7,7 +7,7 @@ module Spree
     end
 
     def show
-      @product = Spree::Product.active.find_by_permalink!(params[:id])
+      @product = Spree::Product.active.find_by_id!(params[:id])
       return unless @product
 
       if @product.live?

@@ -70,126 +70,126 @@ describe Spree::Admin::ActiveSaleEventsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested active_sale_event as @active_sale_event" do
-      active_sale_event = @active_sale.active_sale_events.create! valid_attributes
-      spree_get :show, {:id => active_sale_event.to_param, :active_sale_id => @active_sale.id}, valid_session
-      assigns(:active_sale_event).should eq(active_sale_event)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new active_sale_event as @active_sale_event" do
-      spree_get :new, {:active_sale_id => @active_sale.id}, valid_session
-      assigns(:active_sale_event).should be_a_new(Spree::ActiveSaleEvent)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested active_sale_event as @active_sale_event" do
-      active_sale_event = @active_sale.active_sale_events.create! valid_attributes
-      spree_get :edit, {:id => active_sale_event.to_param, :active_sale_id => @active_sale.id}, valid_session
-      assigns(:active_sale_event).should eq(active_sale_event)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Spree::ActiveSaleEvent" do
-        expect {
-          spree_get :create, {:active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
-        }.to change(Spree::ActiveSaleEvent, :count).by(1)
-      end
-
-      it "assigns a newly created active_sale_event as @active_sale_event" do
-        spree_post :create, {:active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
-        assigns(:active_sale_event).should be_a(Spree::ActiveSaleEvent)
-        assigns(:active_sale_event).should be_persisted
-      end
-
-      it "redirects to the created active_sale_event" do
-        spree_post :create, {:active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
-        response.should redirect_to([:admin, @active_sale, Spree::ActiveSaleEvent])
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved active_sale_event as @active_sale_event" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        active_sale_event = @active_sale.active_sale_events.build
-        # Spree::ActiveSaleEvent.any_instance.stub(:save).and_return(false)
-        spree_post :create, {:id => active_sale_event.to_param, :active_sale_event => {  }, :active_sale_id => @active_sale.id}, valid_session
-        assigns(:active_sale_event).should be_a_new(Spree::ActiveSaleEvent)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        # Spree::ActiveSaleEvent.any_instance.stub(:save).and_return(false)
-        active_sale_event = @active_sale.active_sale_events.build
-        spree_post :create, {:active_sale_event => {  }, :active_sale_id => @active_sale.id, :parent_id => @active_sale.root.id}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested active_sale_event" do
-        active_sale_event = @active_sale.active_sale_events.create! valid_attributes
-        # Assuming there are no other active_sale_event_events in the database, this
-        # specifies that the Spree::ActiveSaleEvent created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Spree::ActiveSaleEvent.any_instance.should_receive(:update_attributes).with(valid_update_attributes)
-        Spree::ActiveSaleEvent.any_instance.stub(:errors).and_return(['error'])
-        spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
-      end
-
-      it "assigns the requested active_sale_event as @active_sale_event" do
-        active_sale_event = @active_sale.active_sale_events.create! valid_attributes
-        spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
-        assigns(:active_sale_event).should eq(active_sale_event)
-      end
-
-      it "redirects to the active_sale_event" do
-        active_sale_event = @active_sale.active_sale_events.create! valid_attributes
-        spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
-        response.should redirect_to([:admin, @active_sale, Spree::ActiveSaleEvent])
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the active_sale_event as @active_sale_event" do
-        active_sale_event = @active_sale.active_sale_events.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => {  }, :active_sale_id => @active_sale.id}, valid_session
-        assigns(:active_sale_event).should eq(active_sale_event)
-      end
-
-      it "re-renders the 'edit' template" do
-        active_sale_event = @active_sale.active_sale_events.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Spree::ActiveSaleEvent.any_instance.stub(:save).and_return(false)
-        Spree::ActiveSaleEvent.any_instance.stub(:errors).and_return(['error'])
-        spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => {  }, :active_sale_id => @active_sale.id, :parent_id => active_sale_event.parent_id}, valid_session
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested active_sale_event" do
-      active_sale_event = @active_sale.active_sale_events.create! valid_attributes
-      expect {
-        spree_xhr_get :destroy, {:id => active_sale_event.to_param, :active_sale_id => @active_sale.id}, valid_session
-      }.to change(Spree::ActiveSaleEvent, :count).by(-1)
-    end
-
-    it "redirects to the active_sale_event_events list" do
-      active_sale_event = @active_sale.active_sale_events.create! valid_attributes
-      spree_xhr_get :destroy, {:id => active_sale_event.to_param, :active_sale_id => @active_sale.id}, valid_session
-      response.code.should eq("200")
-    end
-  end
+  #describe "GET show" do
+  #  it "assigns the requested active_sale_event as @active_sale_event" do
+  #    active_sale_event = @active_sale.active_sale_events.create! valid_attributes
+  #    spree_get :show, {:id => active_sale_event.to_param, :active_sale_id => @active_sale.id}, valid_session
+  #    assigns(:active_sale_event).should eq(active_sale_event)
+  #  end
+  #end
+  #
+  #describe "GET new" do
+  #  it "assigns a new active_sale_event as @active_sale_event" do
+  #    spree_get :new, {:active_sale_id => @active_sale.id}, valid_session
+  #    assigns(:active_sale_event).should be_a_new(Spree::ActiveSaleEvent)
+  #  end
+  #end
+  #
+  #describe "GET edit" do
+  #  it "assigns the requested active_sale_event as @active_sale_event" do
+  #    active_sale_event = @active_sale.active_sale_events.create! valid_attributes
+  #    spree_get :edit, {:id => active_sale_event.to_param, :active_sale_id => @active_sale.id}, valid_session
+  #    assigns(:active_sale_event).should eq(active_sale_event)
+  #  end
+  #end
+  #
+  #describe "POST create" do
+  #  describe "with valid params" do
+  #    it "creates a new Spree::ActiveSaleEvent" do
+  #      expect {
+  #        spree_get :create, {:active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
+  #      }.to change(Spree::ActiveSaleEvent, :count).by(1)
+  #    end
+  #
+  #    it "assigns a newly created active_sale_event as @active_sale_event" do
+  #      spree_post :create, {:active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
+  #      assigns(:active_sale_event).should be_a(Spree::ActiveSaleEvent)
+  #      assigns(:active_sale_event).should be_persisted
+  #    end
+  #
+  #    it "redirects to the created active_sale_event" do
+  #      spree_post :create, {:active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
+  #      response.should redirect_to([:admin, @active_sale, Spree::ActiveSaleEvent])
+  #    end
+  #  end
+  #
+  #  describe "with invalid params" do
+  #    it "assigns a newly created but unsaved active_sale_event as @active_sale_event" do
+  #      # Trigger the behavior that occurs when invalid params are submitted
+  #      active_sale_event = @active_sale.active_sale_events.build
+  #      # Spree::ActiveSaleEvent.any_instance.stub(:save).and_return(false)
+  #      spree_post :create, {:id => active_sale_event.to_param, :active_sale_event => {  }, :active_sale_id => @active_sale.id}, valid_session
+  #      assigns(:active_sale_event).should be_a_new(Spree::ActiveSaleEvent)
+  #    end
+  #
+  #    it "re-renders the 'new' template" do
+  #      # Trigger the behavior that occurs when invalid params are submitted
+  #      # Spree::ActiveSaleEvent.any_instance.stub(:save).and_return(false)
+  #      active_sale_event = @active_sale.active_sale_events.build
+  #      spree_post :create, {:active_sale_event => {  }, :active_sale_id => @active_sale.id, :parent_id => @active_sale.root.id}, valid_session
+  #      response.should render_template("new")
+  #    end
+  #  end
+  #end
+  #
+  #describe "PUT update" do
+  #  describe "with valid params" do
+  #    it "updates the requested active_sale_event" do
+  #      active_sale_event = @active_sale.active_sale_events.create! valid_attributes
+  #      # Assuming there are no other active_sale_event_events in the database, this
+  #      # specifies that the Spree::ActiveSaleEvent created on the previous line
+  #      # receives the :update_attributes message with whatever params are
+  #      # submitted in the request.
+  #      Spree::ActiveSaleEvent.any_instance.should_receive(:update_attributes).with(valid_update_attributes)
+  #      Spree::ActiveSaleEvent.any_instance.stub(:errors).and_return(['error'])
+  #      spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
+  #    end
+  #
+  #    it "assigns the requested active_sale_event as @active_sale_event" do
+  #      active_sale_event = @active_sale.active_sale_events.create! valid_attributes
+  #      spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
+  #      assigns(:active_sale_event).should eq(active_sale_event)
+  #    end
+  #
+  #    it "redirects to the active_sale_event" do
+  #      active_sale_event = @active_sale.active_sale_events.create! valid_attributes
+  #      spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => valid_attributes, :active_sale_id => @active_sale.id}, valid_session
+  #      response.should redirect_to([:admin, @active_sale, Spree::ActiveSaleEvent])
+  #    end
+  #  end
+  #
+  #  describe "with invalid params" do
+  #    it "assigns the active_sale_event as @active_sale_event" do
+  #      active_sale_event = @active_sale.active_sale_events.create! valid_attributes
+  #      # Trigger the behavior that occurs when invalid params are submitted
+  #      spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => {  }, :active_sale_id => @active_sale.id}, valid_session
+  #      assigns(:active_sale_event).should eq(active_sale_event)
+  #    end
+  #
+  #    it "re-renders the 'edit' template" do
+  #      active_sale_event = @active_sale.active_sale_events.create! valid_attributes
+  #      # Trigger the behavior that occurs when invalid params are submitted
+  #      Spree::ActiveSaleEvent.any_instance.stub(:save).and_return(false)
+  #      Spree::ActiveSaleEvent.any_instance.stub(:errors).and_return(['error'])
+  #      spree_put :update, {:id => active_sale_event.to_param, :active_sale_event => {  }, :active_sale_id => @active_sale.id, :parent_id => active_sale_event.parent_id}, valid_session
+  #      response.should render_template("edit")
+  #    end
+  #  end
+  #end
+  #
+  #describe "DELETE destroy" do
+  #  it "destroys the requested active_sale_event" do
+  #    active_sale_event = @active_sale.active_sale_events.create! valid_attributes
+  #    expect {
+  #      spree_xhr_get :destroy, {:id => active_sale_event.to_param, :active_sale_id => @active_sale.id}, valid_session
+  #    }.to change(Spree::ActiveSaleEvent, :count).by(-1)
+  #  end
+  #
+  #  it "redirects to the active_sale_event_events list" do
+  #    active_sale_event = @active_sale.active_sale_events.create! valid_attributes
+  #    spree_xhr_get :destroy, {:id => active_sale_event.to_param, :active_sale_id => @active_sale.id}, valid_session
+  #    response.code.should eq("200")
+  #  end
+  #end
 
 end

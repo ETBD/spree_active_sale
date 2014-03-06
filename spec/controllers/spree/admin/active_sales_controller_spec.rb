@@ -91,7 +91,7 @@ describe Spree::Admin::ActiveSalesController  do
         # Trigger the behavior that occurs when invalid params are submitted
         Spree::ActiveSale.any_instance.stub(:save).and_return(false)
         Spree::ActiveSale.any_instance.stub(:errors).and_return('error')
-        spree_post :create, {:active_sale => {  }}, valid_session, :method => :post
+        spree_post :create, {:active_sale => {:name => 'not here'}}, valid_session, :method => :post
         assigns(:active_sale).should be_a_new(Spree::ActiveSale)
       end
 
@@ -99,7 +99,7 @@ describe Spree::Admin::ActiveSalesController  do
         # Trigger the behavior that occurs when invalid params are submitted
         Spree::ActiveSale.any_instance.stub(:save).and_return(false)
         Spree::ActiveSale.any_instance.stub(:errors).and_return(['error'])
-        spree_post :create, {:active_sale => {  }}, valid_session
+        spree_post :create, {:active_sale => {:name => 'not here' }}, valid_session
         response.should render_template("new")
       end
     end
@@ -137,7 +137,7 @@ describe Spree::Admin::ActiveSalesController  do
         # Trigger the behavior that occurs when invalid params are submitted
         Spree::ActiveSale.any_instance.stub(:save).and_return(false)
         Spree::ActiveSale.any_instance.stub(:errors).and_return(['error'])
-        spree_put :update, {:id => active_sale.to_param, :active_sale => {  }}, valid_session
+        spree_put :update, {:id => active_sale.to_param, :active_sale => {:name => 'not here'}}, valid_session
         assigns(:active_sale).should eq(active_sale)
       end
 
@@ -146,7 +146,7 @@ describe Spree::Admin::ActiveSalesController  do
         # Trigger the behavior that occurs when invalid params are submitted
         Spree::ActiveSale.any_instance.stub(:save).and_return(false)
         Spree::ActiveSale.any_instance.stub(:errors).and_return(['error'])
-        spree_put :update, {:id => active_sale.to_param, :active_sale => {  }}, valid_session
+        spree_put :update, {:id => active_sale.to_param, :active_sale => {:name => 'not here'}}, valid_session
         response.should render_template("edit")
       end
     end
@@ -155,6 +155,7 @@ describe Spree::Admin::ActiveSalesController  do
   describe "DELETE destroy" do
     it "destroys the requested active_sale" do
       active_sale = Spree::ActiveSale.create! valid_attributes
+
       expect {
         spree_delete :destroy, {:id => active_sale.to_param}, valid_session
       }.to change(Spree::ActiveSale, :count).by(-1)

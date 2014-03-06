@@ -19,7 +19,7 @@ describe Spree::ProductsController do
         product = event.eventable
         event.live_and_active?.should be_true
         product.live?.should be_true
-        spree_get :show, :id => product.to_param
+        spree_get :show, :id => product.id
         response.should be_success
         response.status.should == 200
       end
@@ -31,7 +31,7 @@ describe Spree::ProductsController do
         product = event.eventable
         event.live_and_active?.should be_false
         product.live?.should be_false
-        spree_get :show, :id => product.to_param
+        spree_get :show, :id => product.id
         response.should redirect_to(spree.root_path)
       end
     end
