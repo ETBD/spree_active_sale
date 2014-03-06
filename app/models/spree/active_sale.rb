@@ -8,13 +8,14 @@ module Spree
     validate :start_and_end_date_presence, :start_and_end_date_range
 
     has_many :active_sale_events
-    has_one :root, :conditions => { :parent_id => nil }, :class_name => "Spree::ActiveSaleEvent",
-                   :dependent => :destroy
+    has_one :root, -> { where(:parent_id => nil) },
+            :class_name => "Spree::ActiveSaleEvent",
+            :dependent => :destroy
 
     before_save :have_valid_position
     after_save :set_root
 
-    default_scope :order => "#{self.table_name}.position"
+    default_scope   -> { order("#{self.table_name}.position") }
 
     def self.config(&block)
       yield(Spree::ActiveSaleConfig)
@@ -24,12 +25,12 @@ module Spree
       def set_root
         root_hash = self.serializable_hash
         root_hash["active_sale_id"] = self.id
-        root_hash["type"] = "Spree::ActiveSaleEvent"
+        #root_hash["type"] = "Spree::ActiveSaleEvent"
         %w(id created_at updated_at lft rgt parent_id).each{ |column| root_hash.delete(column) }
         if root
           root.update_attributes(root_hash)
         else
-          self.root = Spree::ActiveSaleEvent.create!(root_hash, :without_protection => true)
+          self.root = Spree::ActiveSaleEvent.create!(root_hash)
         end
       end
 
