@@ -10,7 +10,10 @@ require 'ffaker'
 require 'factory_girl'
 
 require 'coveralls'
+require 'spree/testing_support/preferences'
+require 'spree/testing_support/flash'
 Coveralls.wear!
+
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
