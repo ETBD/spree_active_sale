@@ -15,8 +15,8 @@ module Spree
     # we need to look at the write-queue for images which have not been saved yet
     after_post_process :find_dimensions
 
-    include Spree::Core::S3Support
-    supports_s3 :attachment
+    #include Spree::Core::S3Support
+    #supports_s3 :attachment
 
     #used by admin sales autocomplete
     def mini_url
@@ -43,6 +43,7 @@ module Spree
     end
 
     def viewable_type=(event_type)
+      puts "viewable type called" * 88
       super event_type.to_s.classify.constantize.base_class.to_s
     end
   end
