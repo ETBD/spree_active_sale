@@ -10,7 +10,8 @@ module Spree
     before_save :have_valid_position
     after_save :update_parent_active_sales, :update_active_sale_position
 
-    has_many :sale_images, -> { order(position: :asc) }, :as => :viewable, :dependent => :destroy
+    has_many :sale_images, -> { order(position: :asc) }, :as => :viewable, :dependent => :destroy , :class_name => "::Spree::SaleImage"
+
     belongs_to :eventable, :polymorphic => true
     belongs_to :active_sale
 
