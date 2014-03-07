@@ -1,3 +1,26 @@
+## ETBD notes
+
+This pluigin is not really what we want.  It is now upgraded to spree 2.2 and rails OK.
+BUT for ETBD its much to focused on the daily deal market and we do not currently have these requirements.
+
+Notes for including in ETBD again if wanted:
+
+In a view to show the Sales Deals:
+    <div data-hook="homepage_sales">
+      <%= render :partial => 'spree/shared/sale_events', :locals => { :sale_events => all_active_sale_events } %>
+    </div>
+
+and to include the admin tools:
+in a deface file:
+
+Deface::Override.new(
+    :name => "active_sale_tabx",
+    :virtual_path => "spree/admin/shared/_menu",
+    :insert_bottom => "[data-hook='admin_tabs']",
+    :text => "<%= tab :active_sales, :icon => 'icon-th-list' %>"
+)
+
+
 # Welcome to Spree Active Sale
 
 Spree Active Sale makes it easy to handle flash sale/ daily deals behavior within a spree application. By this, you can have a product, or group number of products in a taxon, attach that product, or taxon to a sale event with a start and end date for scheduling. So that, your sale event will only be available between the dates given and when the sale is gone(i.e. not live), it will not be accessible at any point till you create a new one or reschedule the same.
